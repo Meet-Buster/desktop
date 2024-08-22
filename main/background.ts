@@ -1,5 +1,5 @@
 import path from "path";
-import { app, ipcMain } from "electron";
+import { app } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
 
@@ -16,25 +16,27 @@ if (isProd) {
 
   const mainWindow = createWindow("main", {
     width: 1000,
-    height: 600,
+    height: 700,
+    minWidth: 1000,
+    minHeight: 700,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  mainWindow.removeMenu();
+  mainWindow.maximize();
+  mainWindow.show();
 
   if (isProd) {
     await mainWindow.loadURL("app://./");
   } else {
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}`);
-    // mainWindow.webContents.openDevTools();
   }
 })();
 
 app.on("window-all-closed", () => {
   app.quit();
-});
-
-ipcMain.on("message", async (event, arg) => {
-  event.reply("message", `${arg} World!`);
 });

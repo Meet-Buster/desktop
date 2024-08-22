@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "../components/ui/button";
+import Link from "next/link";
 
 function page() {
-  return <Button variant="outline">Button</Button>;
+  return <Link href="/auth/login">Button</Link>;
 }
 
 export default page;

@@ -8,7 +8,7 @@ const cairo = Cairo({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
   title: "Buster",
-  //   description: "حساباتي هو تطبيق لإدارة جميع التحويلات لحسابك.",
+    description: "",
 };
 
 export default function RootLayout({
