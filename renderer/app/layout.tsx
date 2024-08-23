@@ -8,7 +8,8 @@ const cairo = Cairo({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
   title: "Buster",
-    description: "",
+  description:
+    "Buster or Meet Buster is an open source one-to-one securely meeting application.",
 };
 
 export default function RootLayout({

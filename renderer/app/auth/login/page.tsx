@@ -49,7 +49,7 @@ export default function Login() {
             </Button>
             <div className="w-full relative">
               <hr />
-              <span className="text-center absolute -translate-y-1/2 left-1/2 -translate-x-1/2 bg-background px-3 uppercase text-xs">
+              <span className="text-center absolute -translate-y-1/2 left-1/2 -translate-x-1/2 bg-card px-3 uppercase text-xs">
                 or
               </span>
             </div>
