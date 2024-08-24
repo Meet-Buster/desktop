@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { RegisterData, LoginData } from "@/types";
 
 export const registerAccount = async (registerData: RegisterData) => {
-  const response = await fetch("https://api.example.com/auth/register", {
+  const response = await fetch(`${process.env.API_URL}/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const registerAccount = async (registerData: RegisterData) => {
 };
 
 export const loginAccount = async (loginData: LoginData) => {
-  const response = await fetch("https://api.example.com/auth/login", {
+  const response = await fetch(`${process.env.API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
