@@ -8,6 +8,8 @@ export function middleware(request: NextRequest) {
       // Redirect unauthenticated users trying to access the dashboard to /
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
+
+    return NextResponse.next();
   } catch (error) {
     console.log(error);
     return NextResponse.redirect(new URL("/auth/login", request.url));
