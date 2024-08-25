@@ -1,9 +1,11 @@
-import path from "path";
-import { app } from "electron";
+import path, { join } from "path";
+import { app, nativeImage } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
 
 const isProd = process.env.NODE_ENV === "production";
+const iconPath = join(__dirname, "../../resources/icon.ico");
+const icon = nativeImage.createFromPath(iconPath);
 
 if (isProd) {
   serve({ directory: "app" });
@@ -20,6 +22,8 @@ if (isProd) {
     minWidth: 1000,
     minHeight: 700,
     show: false,
+    icon: icon,
+    ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
