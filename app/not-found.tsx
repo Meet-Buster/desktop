@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="h-screen flex flex-col gap-3 items-center justify-center ltr">
       <div className="flex items-center">
-        <h2>This page doesn't exist</h2>
+        <h2>This page does not exist</h2>
         <span className="mx-2 font-bold">
           <svg
             width="15"
@@ -26,7 +26,7 @@ export default function NotFound() {
       </div>
       <Link href="/auth/login">
         <Button variant="secondary" className="ml-2 w-32">
-        😔 Go back
+          😔 Go back
         </Button>
       </Link>
     </div>
