@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getLoggedUser } from "./app/actions";
 
-export function middleware(request: NextRequest) {
-  const authenticated = true;
+export async function middleware(request: NextRequest) {
+  const authenticated = await getLoggedUser();
 
   const { pathname } = request.nextUrl;
 

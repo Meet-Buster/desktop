@@ -1,14 +1,4 @@
 import SettingsLinks from "@/components/SettingsLinks";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 
 export default function Application() {
   return (
@@ -19,9 +9,7 @@ export default function Application() {
         </div>
         <div className="mx-auto grid w-full items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
           <SettingsLinks />
-          <div className="grid gap-6">
-            Comming Soon
-          </div>
+          <div className="grid gap-6">Comming Soon</div>
         </div>
       </main>
     </div>

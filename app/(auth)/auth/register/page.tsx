@@ -21,12 +21,17 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { registerAccount } from "@/app/actions";
+import cookies from "@/lib/cookies";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/useUserStore";
+import { toast } from "sonner";
 
 const formSchema = z.object({
-  firstName: z.string().min(3, {
+  first_name: z.string().min(3, {
     message: "First name is too short.",
   }),
-  secondName: z.string().min(3, {
+  last_name: z.string().min(3, {
     message: "Second name is too short.",
   }),
   email: z.string().email({
@@ -41,19 +46,37 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const router = useRouter();
+
+  const { updateUser } = useUserStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      secondName: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
       password_confirmation: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const data = await registerAccount(values);
+
+    if (data.user) {
+      updateUser(data.user);
+
+      cookies.set("token", data.token, {
+        expires: new Date(Date.now() + 86400 * 1000),
+      });
+
+      toast.success("You have created an account successfully");
+
+      router.replace("/");
+    } else {
+      toast.error(data.message);
+    }
   }
 
   return (
@@ -73,7 +96,7 @@ export default function Login() {
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="firstName"
+                      name="first_name"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
@@ -94,7 +117,7 @@ export default function Login() {
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="secondName"
+                      name="last_name"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>

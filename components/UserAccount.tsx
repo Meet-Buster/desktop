@@ -24,8 +24,26 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
+import { logoutUser } from "@/app/actions";
+import cookies from "@/lib/cookies";
+import { useRouter } from "next/navigation";
 
 export default function UserAccount() {
+  const router = useRouter();
+
+  async function logout() {
+    const isLoggedOut = await logoutUser();
+
+    console.log(isLoggedOut);
+
+    if (isLoggedOut) {
+      cookies.remove("token");
+
+      toast.success("You logged out successfully 😤.");
+
+      router.replace("/auth/login");
+    }
+  }
   return (
     <AlertDialog>
       <DropdownMenu>
@@ -65,9 +83,7 @@ export default function UserAccount() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => toast.info("This should log the user out.")}
-          >
+          <AlertDialogAction onClick={() => logout()}>
             Logout 😔
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -21,6 +21,11 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginAccount } from "@/app/actions";
+import cookies from "@/lib/cookies";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/useUserStore";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -32,6 +37,10 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const router = useRouter();
+
+  const { updateUser } = useUserStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +49,22 @@ export default function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const data = await loginAccount(values);
+
+    if (data.user) {
+      updateUser(data.user);
+
+      cookies.set("token", data.token, {
+        expires: new Date(Date.now() + 86400 * 1000),
+      });
+
+      toast.success("You have logged in successfully");
+
+      router.replace("/");
+    } else {
+      toast.error(data.message);
+    }
   }
 
   return (
