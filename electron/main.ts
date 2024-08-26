@@ -4,7 +4,7 @@ import { getPort } from "get-port-please";
 import { startServer } from "next/dist/server/lib/start-server";
 import { join } from "path";
 
-const iconPath = join(__dirname, "../../resources/icon.ico");
+const iconPath = join(__dirname, "../public/logo.jpg");
 const icon = nativeImage.createFromPath(iconPath);
 
 const createWindow = () => {

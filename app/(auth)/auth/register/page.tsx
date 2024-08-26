@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,16 +24,19 @@ import {
 
 const formSchema = z.object({
   firstName: z.string().min(3, {
-    message: "first name is too short.",
+    message: "First name is too short.",
   }),
   secondName: z.string().min(3, {
-    message: "second name is too short.",
+    message: "Second name is too short.",
   }),
   email: z.string().email({
     message: "Invalid email address.",
   }),
   password: z.string().min(6, {
     message: "Password is too short.",
+  }),
+  password_confirmation: z.string().min(6, {
+    message: "Password confirmation is too short.",
   }),
 });
 
@@ -46,6 +48,7 @@ export default function Login() {
       secondName: "",
       email: "",
       password: "",
+      password_confirmation: "",
     },
   });
 
@@ -139,6 +142,27 @@ export default function Login() {
                       <div className="grid gap-2">
                         <Label htmlFor="password">Password</Label>
                         <Input id="password" type="password" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password_confirmation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="grid gap-2">
+                        <Label htmlFor="password_confirmation">
+                          Confirm password
+                        </Label>
+                        <Input
+                          id="password_confirmation"
+                          type="password"
+                          {...field}
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />
