@@ -69,7 +69,7 @@ export default function Login() {
 
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto w-[384px]">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>

@@ -28,11 +28,8 @@ import { useUserStore } from "@/stores/useUserStore";
 import { toast } from "sonner";
 
 const formSchema = z.object({
-  first_name: z.string().min(3, {
-    message: "First name is too short.",
-  }),
-  last_name: z.string().min(3, {
-    message: "Second name is too short.",
+  username: z.string().min(3, {
+    message: "Username is too short.",
   }),
   email: z.string().email({
     message: "Invalid email address.",
@@ -53,8 +50,7 @@ export default function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      username: "",
       email: "",
       password: "",
       password_confirmation: "",
@@ -81,7 +77,7 @@ export default function Login() {
 
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto w-[384px]">
         <CardHeader>
           <CardTitle className="text-xl">Register</CardTitle>
           <CardDescription>
@@ -92,49 +88,26 @@ export default function Login() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <div className="grid gap-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <FormField
-                      control={form.control}
-                      name="first_name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div className="grid gap-2">
-                              <Label htmlFor="first-name">First name</Label>
-                              <Input
-                                id="first-name"
-                                placeholder="Max"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <FormField
-                      control={form.control}
-                      name="last_name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div className="grid gap-2">
-                              <Label htmlFor="second-name">Second name</Label>
-                              <Input
-                                id="second-name"
-                                placeholder="Robinson"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div className="grid gap-2">
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="grid gap-2">
+                            <Label htmlFor="first-name">Username</Label>
+                            <Input
+                              id="first-name"
+                              placeholder="Max"
+                              {...field}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
               <FormField

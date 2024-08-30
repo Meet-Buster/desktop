@@ -27,32 +27,28 @@ import Link from "next/link";
 import { logoutUser } from "@/app/actions";
 import cookies from "@/lib/cookies";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/useUserStore";
 
 export default function UserAccount() {
   const router = useRouter();
+  const { user } = useUserStore();
 
   async function logout() {
     const isLoggedOut = await logoutUser();
 
-    console.log(isLoggedOut);
-
     if (isLoggedOut) {
       cookies.remove("token");
-
       toast.success("You logged out successfully 😤.");
-
       router.replace("/auth/login");
     }
   }
+
   return (
     <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="absolute top-8 right-8 cursor-pointer">
-            <AvatarImage
-              src="https://github.com/alieldeba.png"
-              alt="@alieldeba"
-            />
+            <AvatarImage src={user?.avatar} alt="@alieldeba" />
             <AvatarFallback>AE</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
@@ -64,7 +60,13 @@ export default function UserAccount() {
               <Link href="/profile">Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/settings">Settings</Link>
+              <Link href="/meetings">Meetings</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/application">Application</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/support">Support</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

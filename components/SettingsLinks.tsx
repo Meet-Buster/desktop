@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function SettingsLinks() {
@@ -14,9 +14,9 @@ export default function SettingsLinks() {
       active: "/profile" === pathname,
     },
     {
-      name: "settings",
-      href: "/settings",
-      active: "/settings" === pathname,
+      name: "meetings",
+      href: "/meetings",
+      active: "/meetings" === pathname,
     },
     {
       name: "application",
@@ -35,7 +35,7 @@ export default function SettingsLinks() {
       {links.map((item, idx) => (
         <Link
           href={item.href}
-          className={`font-semibold capitalize ${
+          className={`font-semibold uppercase tracking-widest ${
             item.active ? "text-primary" : ""
           }`}
           key={idx}

@@ -2,9 +2,10 @@
 
 import { cookies } from "next/headers";
 import { RegisterData, LoginData } from "@/types";
+import { UUID } from "crypto";
 
 export const registerAccount = async (registerData: RegisterData) => {
-  const name = registerData.first_name + " " + registerData.last_name;
+  const name = registerData.username;
 
   return fetch(`${process.env.API_URL}/auth/register`, {
     method: "POST",
@@ -88,6 +89,52 @@ export const logoutUser = async () => {
     });
 };
 
-export const getCookie = (cookie: string): string | undefined => {
+export const updateUser = async (userId: UUID) => {
+  const token = await getCookie("token");
+  return fetch(`${process.env.API_URL}/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    // .then((data) => {
+    //   if (data.message === "...") {
+    //     return false;
+    //   }
+    //   return data;
+    // })
+    .catch((error) => {
+      console.error("Error:", error);
+      return false;
+    });
+};
+
+export const deleteUser = async (userId: UUID) => {
+  const token = await getCookie("token");
+  return fetch(`${process.env.API_URL}/users/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((data) => {
+      if (data.status === 204) {
+        return true;
+      }
+      return false;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      return false;
+    });
+};
+
+export const getCookie = async (
+  cookie: string
+): Promise<string | undefined> => {
   return cookies().get(cookie)?.value;
 };
